@@ -1,0 +1,12 @@
+{
+  "ConnectionStrings": {
+    "SampleDB": "server=localhost;port=3306;database=sampledb;user=user;password=password"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
