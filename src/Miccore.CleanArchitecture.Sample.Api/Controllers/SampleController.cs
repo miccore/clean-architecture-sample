@@ -117,8 +117,8 @@ namespace Miccore.CleanArchitecture.Sample.Api.Controllers
         [HttpGet(template: "", Name = nameof(GetAllSamples))]
         public async Task<ActionResult<PaginationModel<SampleResponse>>> GetAllSamples([FromQuery] PaginationQuery query)
         {
-            // try
-            // {
+            try
+            {
                 // create query
                 GetAllSampleQuery sampleQuery = new GetAllSampleQuery(query);
 
@@ -134,12 +134,12 @@ namespace Miccore.CleanArchitecture.Sample.Api.Controllers
                 // return response
                 return HandleSuccessResponse(samples);
 
-            // }
-            // // general exception
-            // catch (Exception ex)
-            // {
-            //     return HandleErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
-            // }
+            }
+            // general exception
+            catch (Exception ex)
+            {
+                return HandleErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
         /// <summary>

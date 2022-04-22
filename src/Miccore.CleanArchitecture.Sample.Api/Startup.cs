@@ -7,6 +7,7 @@ using MediatR;
 using FluentValidation.AspNetCore;
 using Miccore.CleanArchitecture.Sample.Infrastructure.Persistances;
 using Miccore.CleanArchitecture.Sample.Application.Handlers.Sample.CommandHandlers;
+using Miccore.CleanArchitecture.Sample.Application.Dependency;
 
 namespace Miccore.CleanArchitecture.Sample.Api
 {
@@ -77,13 +78,13 @@ namespace Miccore.CleanArchitecture.Sample.Api
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
             services.AddAutoMapper(typeof(Startup));
-            services.AddMediatR(typeof(CreateSampleCommandHandler).GetTypeInfo().Assembly);
 
             #endregion
 
             #region functions
             
             services.AddInfrastructure(_configuration);
+            services.AddMediat(_configuration);
             
             #endregion
 
