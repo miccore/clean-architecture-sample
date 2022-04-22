@@ -44,7 +44,7 @@ namespace Miccore.CleanArchitecture.Sample.Api.Controllers
                 var validator = new CreateSampleValidator();
                 var validate = validator.Validate(command);
                 if(!validate.IsValid){
-                    throw new InvalidDataException(validate.ToString());
+                    throw new ValidatorException(validate.ToString());
                 }
 
                 // call command
@@ -60,7 +60,7 @@ namespace Miccore.CleanArchitecture.Sample.Api.Controllers
                 return HandleErrorResponse(HttpStatusCode.NotFound, notFound.Message);
             }
             // invalid data validation exception
-            catch (InvalidDataException invalid)
+            catch (ValidatorException invalid)
             {
                 return HandleErrorResponse(HttpStatusCode.BadRequest, invalid.Message);
             }
@@ -196,7 +196,7 @@ namespace Miccore.CleanArchitecture.Sample.Api.Controllers
                 var validator = new UpdateSampleValidator();
                 var validate = validator.Validate(command);
                 if(!validate.IsValid){
-                    throw new InvalidDataException(validate.ToString());
+                    throw new ValidatorException(validate.ToString());
                 }
 
                 // call command
@@ -212,7 +212,7 @@ namespace Miccore.CleanArchitecture.Sample.Api.Controllers
                 return HandleErrorResponse(HttpStatusCode.NotFound, notFound.Message);
             }
             // invalid data validation exception
-            catch (InvalidDataException invalid)
+            catch (ValidatorException invalid)
             {
                 return HandleErrorResponse(HttpStatusCode.BadRequest, invalid.Message);
             }

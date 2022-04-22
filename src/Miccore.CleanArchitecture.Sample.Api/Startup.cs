@@ -1,12 +1,6 @@
-
-using System.Reflection;
-using Miccore.CleanArchitecture.Sample.Core.Repositories.Base;
-using Miccore.CleanArchitecture.Sample.Infrastructure.Repositories.Base;
 using Microsoft.OpenApi.Models;
-using MediatR;
 using FluentValidation.AspNetCore;
 using Miccore.CleanArchitecture.Sample.Infrastructure.Persistances;
-using Miccore.CleanArchitecture.Sample.Application.Handlers.Sample.CommandHandlers;
 using Miccore.CleanArchitecture.Sample.Application.Dependency;
 
 namespace Miccore.CleanArchitecture.Sample.Api

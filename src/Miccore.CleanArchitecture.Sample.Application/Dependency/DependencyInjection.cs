@@ -1,4 +1,3 @@
-using Miccore.CleanArchitecture.Sample.Application.Handlers.Sample.CommandHandlers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
@@ -11,6 +10,12 @@ namespace Miccore.CleanArchitecture.Sample.Application.Dependency
     /// </summary>
     public static class DependencyInjection
     {
+        /// <summary>
+        /// add mediatr commands and query assembly
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
         public static IServiceCollection AddMediat(this IServiceCollection services, IConfiguration configuration){
 
             #region addMediatR
