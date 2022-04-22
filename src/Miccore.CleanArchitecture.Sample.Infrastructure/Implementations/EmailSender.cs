@@ -2,7 +2,7 @@ using System.Net.Mail;
 using Miccore.CleanArchitecture.Sample.Core.Interfaces;
 using Microsoft.Extensions.Logging;
 
-namespace Miccore.CleanArchitecture.Sample.Infrastructure.Definitions
+namespace Miccore.CleanArchitecture.Sample.Infrastructure.Implementations
 {
     public class EmailSender : IEmailSender
     {

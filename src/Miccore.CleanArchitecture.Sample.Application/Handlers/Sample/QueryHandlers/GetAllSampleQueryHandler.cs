@@ -29,7 +29,7 @@ namespace Miccore.CleanArchitecture.Sample.Application.Handlers.Sample.QueryHand
         {
             // get items
             var entities =  await _sampleRepository.GetAllAsync(request.query);
-
+            
             // mapping with response
             var responses = SampleMapper.Mapper.Map<PaginationModel<SampleResponse>>(entities);
 
