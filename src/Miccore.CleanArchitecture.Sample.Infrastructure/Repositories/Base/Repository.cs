@@ -25,7 +25,7 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories.Base
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public async Task<T> AddAsync(T entity)
+        public Task<T> AddAsync(T entity)
         {
             throw new NotImplementedException();
         }
@@ -35,7 +35,7 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories.Base
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<T> DeleteAsync(int id)
+        public Task<T> DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }
