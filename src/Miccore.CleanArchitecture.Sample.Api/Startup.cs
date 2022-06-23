@@ -91,6 +91,11 @@ namespace Miccore.CleanArchitecture.Sample.Api
         /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var builder = new ConfigurationBuilder()
+                            .SetBasePath(env.ContentRootPath)
+                            .AddJsonFile($"sample.settings.{env.EnvironmentName}.json", optional: true)
+                            .AddEnvironmentVariables();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -107,7 +112,7 @@ namespace Miccore.CleanArchitecture.Sample.Api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sample.Microservice");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sample.Api");
                 c.RoutePrefix = string.Empty;
             });
             app.UseEndpoints(endpoints =>
