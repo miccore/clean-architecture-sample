@@ -24,7 +24,7 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories
         public new async Task<Miccore.CleanArchitecture.Sample.Core.Entities.Sample> AddAsync(Miccore.CleanArchitecture.Sample.Core.Entities.Sample entity)
         {
             entity.CreatedAt = DateUtils.GetCurrentTimeStamp();
-            await _context.Set<Miccore.CleanArchitecture.Sample.Core.Entities.Sample>().AddAsync(entity);
+            await _context.Samples.AddAsync(entity);
             await _context.SaveChangesAsync();
             return entity;
         }
