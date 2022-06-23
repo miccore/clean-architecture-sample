@@ -21,16 +21,13 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories.Base
         }
 
         /// <summary>
-        /// add entoty
+        /// add entity
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
         public async Task<T> AddAsync(T entity)
         {
-            entity.CreatedAt = DateUtils.GetCurrentTimeStamp();
-            await _context.Set<T>().AddAsync(entity);
-            await _context.SaveChangesAsync();
-            return entity;
+            throw new NotImplementedException();
         }
 
         /// <summary>
