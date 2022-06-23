@@ -15,19 +15,6 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories
         /// <param name="context"></param>
         /// <returns></returns>
         public SampleRepository(SampleApplicationDbContext context) : base(context) { }
-
-        /// <summary>
-        /// add entity
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        public new async Task<Miccore.CleanArchitecture.Sample.Core.Entities.Sample> AddAsync(Miccore.CleanArchitecture.Sample.Core.Entities.Sample entity)
-        {
-            entity.CreatedAt = DateUtils.GetCurrentTimeStamp();
-            await _context.Samples.AddAsync(entity);
-            await _context.SaveChangesAsync();
-            return entity;
-        }
         
         /// <summary>
         /// soft delete
