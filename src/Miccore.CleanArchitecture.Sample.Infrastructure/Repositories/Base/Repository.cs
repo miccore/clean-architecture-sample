@@ -1,3 +1,4 @@
+using Miccore.CleanArchitecture.Sample.Core.Entities;
 using Miccore.CleanArchitecture.Sample.Core.Enumerations;
 using Miccore.CleanArchitecture.Sample.Core.Exceptions;
 using Miccore.CleanArchitecture.Sample.Core.Repositories.Base;
@@ -11,7 +12,7 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories.Base
     /// implementation class of  core repository interface
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         protected readonly SampleApplicationDbContext _context;
 
@@ -49,7 +50,11 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories.Base
         /// <returns></returns>
         public async Task<PaginationModel<T>> GetAllAsync(PaginationQuery query)
         {
-            return await _context.Set<T>().PaginateAsync(query);
+            var entities =  await _context.Set<T>().PaginateAsync(query);
+            // remove all deleted
+            entities.Items.RemoveAll(x => x.DeletedAt is not 0);
+            
+            return entities;
         }
 
         /// <summary>
@@ -60,8 +65,9 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories.Base
         public async Task<T> GetByIdAsync(int id)
         {
             var entity = await _context.Set<T>().FindAsync(id);
-            if(entity is null){
-                throw new NotFoundException(ExceptionEnum.SAMPLE_NOT_FOUND.ToString());
+
+            if(entity is null || entity.DeletedAt is not 0){
+                throw new NotFoundException(ExceptionEnum.NOT_FOUND.ToString());
             }
             
             return entity;

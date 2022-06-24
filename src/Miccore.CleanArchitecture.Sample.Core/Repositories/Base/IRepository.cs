@@ -1,3 +1,4 @@
+using Miccore.CleanArchitecture.Sample.Core.Entities;
 using Miccore.Pagination.Model;
 
 namespace Miccore.CleanArchitecture.Sample.Core.Repositories.Base
@@ -6,7 +7,7 @@ namespace Miccore.CleanArchitecture.Sample.Core.Repositories.Base
     /// core repository interface
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IRepository<T> where T : class
+    public interface IRepository<T> where T : BaseEntity
     {
         Task<PaginationModel<T>> GetAllAsync(PaginationQuery query);
         Task<T> GetByIdAsync(int id);
