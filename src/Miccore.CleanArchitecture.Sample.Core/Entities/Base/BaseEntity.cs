@@ -18,21 +18,21 @@ namespace Miccore.CleanArchitecture.Sample.Core.Entities
             set;
         }
 
-        [DefaultValue(null)]
+        [DefaultValue(0)]
         public int CreatedAt
         {
             get;
             set;
         } = DateUtils.GetCurrentTimeStamp();
 
-        [DefaultValue(null)]
+        [DefaultValue(0)]
         public int UpdatedAt
         {
             get;
             set;
         }
 
-        [DefaultValue(null)]
+        [DefaultValue(0)]
         public int DeletedAt
         {
             get;
