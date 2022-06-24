@@ -40,7 +40,7 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories
         public new async Task<Miccore.CleanArchitecture.Sample.Core.Entities.Sample> UpdateAsync(Miccore.CleanArchitecture.Sample.Core.Entities.Sample entity)
         {
             var sample = await _context.Samples.FindAsync(entity.Id);
-            if (sample is null)
+            if (sample is null || entity.DeletedAt is not 0)
             {
                 throw new NotFoundException(ExceptionEnum.SAMPLE_NOT_FOUND.ToString());
             }
