@@ -1,0 +1,1 @@
+dotnet run --project src/Miccore.CleanArchitecture.Sample.Api/Miccore.CleanArchitecture.Sample.Api.csproj
