@@ -13,7 +13,7 @@ namespace Miccore.CleanArchitecture.Sample.Core.Enumerations
         [Description("Sample not found")]
         SAMPLE_NOT_FOUND,
         
-        #region exceptions
+        #region enums
         
         #endregion
     }
