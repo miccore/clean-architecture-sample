@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine
 WORKDIR /app
 
 COPY ./src/Miccore.CleanArchitecture.Sample.Api/bin/Release/net6.0/publish/. .
