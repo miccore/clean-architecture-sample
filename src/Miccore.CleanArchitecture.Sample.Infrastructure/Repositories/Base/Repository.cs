@@ -2,9 +2,12 @@ using Miccore.CleanArchitecture.Sample.Core.Entities;
 using Miccore.CleanArchitecture.Sample.Core.Enumerations;
 using Miccore.CleanArchitecture.Sample.Core.Exceptions;
 using Miccore.CleanArchitecture.Sample.Core.Repositories.Base;
+using Miccore.CleanArchitecture.Sample.Core.Utils;
 using Miccore.CleanArchitecture.Sample.Infrastructure.Data;
 using Miccore.Pagination.Model;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 
 namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories.Base
 {
@@ -34,13 +37,21 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories.Base
         }
 
         /// <summary>
-        /// delete entity
+        /// soft delete entity
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Task<T> DeleteAsync(int id)
+        public async Task<T> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await _context.Set<T>().FirstOrDefaultAsync(x => x.Id == id && x.DeletedAt == 0);
+            if (entity is null)
+            {
+                throw new NotFoundException(ExceptionEnum.NOT_FOUND.ToString());
+            }
+            entity.DeletedAt = DateUtils.GetCurrentTimeStamp();
+            await _context.SaveChangesAsync();
+
+            return entity;
         }
 
         /// <summary>
@@ -50,9 +61,9 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories.Base
         /// <returns></returns>
         public async Task<PaginationModel<T>> GetAllAsync(PaginationQuery query)
         {
-            var entities =  await _context.Set<T>().PaginateAsync(query);
-            // remove all deleted
-            entities.Items.RemoveAll(x => x.DeletedAt is not 0);
+            var entities =  await _context.Set<T>()
+                                            .Where(x => x.DeletedAt == 0)
+                                            .PaginateAsync(query);
             
             return entities;
         }
@@ -64,9 +75,9 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories.Base
         /// <returns></returns>
         public async Task<T> GetByIdAsync(int id)
         {
-            var entity = await _context.Set<T>().FindAsync(id);
+            var entity = await _context.Set<T>().FirstOrDefaultAsync(x => x.Id == id && x.DeletedAt == 0);
 
-            if(entity is null || entity.DeletedAt is not 0){
+            if(entity is null){
                 throw new NotFoundException(ExceptionEnum.NOT_FOUND.ToString());
             }
             

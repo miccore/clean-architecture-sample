@@ -30,7 +30,7 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Persistances
             // database connexion
             services.AddDbContext<SampleApplicationDbContext>(option =>
             {
-                option.UseMySql(connectionString, new MySqlServerVersion(new Version()));
+                option.UseMySql("server=localhost;port=3306;database=sampledb;user=solex_user;password=Le237c!elC#Solex", new MySqlServerVersion(new Version()));
             }, ServiceLifetime.Scoped);
 
             // add repositories

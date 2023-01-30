@@ -4,6 +4,7 @@ using Miccore.CleanArchitecture.Sample.Core.Repositories;
 using Miccore.CleanArchitecture.Sample.Core.Utils;
 using Miccore.CleanArchitecture.Sample.Infrastructure.Data;
 using Miccore.CleanArchitecture.Sample.Infrastructure.Repositories.Base;
+using Microsoft.EntityFrameworkCore;
 
 namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories
 {
@@ -15,36 +16,20 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories
         /// <param name="context"></param>
         /// <returns></returns>
         public SampleRepository(SampleApplicationDbContext context) : base(context) { }
-        
-        /// <summary>
-        /// soft delete
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public new async Task DeleteAsync(int id)
-        {
-            var entity = await _context.Samples.FindAsync(id);
-            if (entity is null)
-            {
-                throw new NotFoundException(ExceptionEnum.SAMPLE_NOT_FOUND.ToString());
-            }
-            entity.DeletedAt = DateUtils.GetCurrentTimeStamp();
-            await _context.SaveChangesAsync();
-        }
 
         /// <summary>
         /// update sample entity
         /// </summary>
         /// <param name="sample"></param>
         /// <returns></returns>
-        public new async Task<Miccore.CleanArchitecture.Sample.Core.Entities.Sample> UpdateAsync(Miccore.CleanArchitecture.Sample.Core.Entities.Sample entity)
+        public new async Task<Core.Entities.Sample> UpdateAsync(Miccore.CleanArchitecture.Sample.Core.Entities.Sample entity)
         {
-            var sample = await _context.Samples.FindAsync(entity.Id);
-            if (sample is null || entity.DeletedAt is not 0)
+            var sample = await _context.Set<Core.Entities.Sample>().FirstOrDefaultAsync(x => x.Id == entity.Id && x.DeletedAt == 0);
+            if (sample is null)
             {
                 throw new NotFoundException(ExceptionEnum.SAMPLE_NOT_FOUND.ToString());
             }
-
+            sample.Name = entity.Name;
             sample.UpdatedAt = DateUtils.GetCurrentTimeStamp();
             await _context.SaveChangesAsync();
 

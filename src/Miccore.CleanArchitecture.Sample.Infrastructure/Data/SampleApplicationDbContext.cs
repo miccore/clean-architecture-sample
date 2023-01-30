@@ -11,7 +11,7 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Data
 
         #region dbset
 
-        public DbSet<Miccore.CleanArchitecture.Sample.Core.Entities.Sample> Samples
+        public  DbSet<Miccore.CleanArchitecture.Sample.Core.Entities.Sample> Samples
         {
             get;
             set;

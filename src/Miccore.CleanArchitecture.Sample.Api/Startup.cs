@@ -119,6 +119,7 @@ namespace Miccore.CleanArchitecture.Sample.Api
             {
                 endpoints.MapControllers();
             });
+            
 
         }
 
