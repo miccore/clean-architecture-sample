@@ -100,7 +100,7 @@ namespace Miccore.CleanArchitecture.Sample.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();

@@ -23,15 +23,15 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Persistances
         /// <returns></returns>
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-
             // get connection string from environment file
-            var connectionString = configuration.GetConnectionString("SampleDB");
+            var connectionString = configuration.GetConnectionString("SampleDB") ?? "server=localhost;port=3306;database=sampledb;user=user1;password=password";
 
             // database connexion
             services.AddDbContext<SampleApplicationDbContext>(option =>
             {
-                option.UseMySql("server=localhost;port=3306;database=sampledb;user=solex_user;password=Le237c!elC#Solex", new MySqlServerVersion(new Version()));
+                option.UseMySql(connectionString, new MySqlServerVersion(new Version()));
             }, ServiceLifetime.Scoped);
+
 
             // add repositories
             #region repositories
