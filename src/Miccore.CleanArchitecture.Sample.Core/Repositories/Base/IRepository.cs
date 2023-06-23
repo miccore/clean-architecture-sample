@@ -15,4 +15,4 @@ namespace Miccore.CleanArchitecture.Sample.Core.Repositories.Base
         Task<T> UpdateAsync(T entity);
         Task<T> DeleteAsync(int id);
     }
-}
+} 

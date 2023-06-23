@@ -12,6 +12,10 @@ namespace Miccore.CleanArchitecture.Sample.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.AddJsonFile($"sample.settings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: false, reloadOnChange: false);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
