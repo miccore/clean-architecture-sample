@@ -24,12 +24,12 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Persistances
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             // get connection string from environment file
-            var connectionString = configuration.GetConnectionString("SampleDB") ?? "server=localhost;port=3306;database=sampledb;user=user1;password=password";
+            var connectionString = configuration.GetConnectionString("SampleDB");
 
             // database connexion
             services.AddDbContext<SampleApplicationDbContext>(option =>
             {
-                option.UseMySql(connectionString, new MySqlServerVersion(new Version()));
+                option.UseMySql(connectionString, new MySqlServerVersion(new Version()), b => b.MigrationsAssembly("Miccore.CleanArchitecture.Sample.Api"));
             }, ServiceLifetime.Scoped);
 
 
