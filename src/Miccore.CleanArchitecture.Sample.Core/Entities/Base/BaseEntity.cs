@@ -26,14 +26,14 @@ namespace Miccore.CleanArchitecture.Sample.Core.Entities
         } = DateUtils.GetCurrentTimeStamp();
 
         [DefaultValue(0)]
-        public int UpdatedAt
+        public int? UpdatedAt
         {
             get;
             set;
         }
 
         [DefaultValue(0)]
-        public int DeletedAt
+        public int? DeletedAt
         {
             get;
             set;
