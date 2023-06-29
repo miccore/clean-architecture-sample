@@ -24,7 +24,7 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Persistances
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             // get connection string from environment file
-            var connectionString = configuration.GetConnectionString("SampleDB");
+            var connectionString = $"server={configuration["Server"]};port={configuration["Port"]};database={configuration["Database"]};user={configuration["User"]};password={configuration["Password"]}";
 
             // database connexion
             services.AddDbContext<SampleApplicationDbContext>(option =>
