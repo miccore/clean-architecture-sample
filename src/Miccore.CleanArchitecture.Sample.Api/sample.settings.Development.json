@@ -1,7 +1,9 @@
 {
-  "ConnectionStrings": {
-    "SampleDB": "server=localhost;port=3306;database=sampledb;user=user1;password=password"
-  },
+  "Server": "localhost",
+  "Port": "3306",
+  "Database": "sampledb",
+  "User": "",
+  "Password": "",
   "Logging": {
     "LogLevel": {
       "Default": "Information",
