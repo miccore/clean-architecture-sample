@@ -8,6 +8,7 @@ using Miccore.Pagination.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories.Base
 {
@@ -83,6 +84,41 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories.Base
             
             return entity;
         }
+
+        /// <summary>
+        /// get all entities paginated by passing parameters paginated values
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        public async Task<PaginationModel<T>> GetAllByParametersPaginatedAsync(PaginationQuery query, Expression<Func<T, bool>> WhereExpression)
+        {
+            var entities =  await _context.Set<T>().Where(WhereExpression).Where(x => x.DeletedAt == 0).PaginateAsync(query);
+            return entities;
+        }
+
+        /// <summary>
+        /// get all entities paginated by passing parameters
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        public async Task<List<T>> GetAllByParametersAsync(Expression<Func<T, bool>> WhereExpression)
+        {
+            var entities =  await _context.Set<T>().Where(WhereExpression).Where(x => x.DeletedAt == 0).ToListAsync();
+            return entities;
+        }
+
+        /// <summary>
+        /// get unique entity by passing parameters
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<T> GetByParametersAsync(Expression<Func<T, bool>> WhereExpression)
+        {
+            var entity = await _context.Set<T>().Where(WhereExpression).FirstOrDefaultAsync(x => x.DeletedAt == 0);
+            
+            return entity;
+        }
+
 
         /// <summary>
         /// update entity
