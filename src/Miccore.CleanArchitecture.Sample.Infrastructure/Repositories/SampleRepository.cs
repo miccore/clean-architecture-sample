@@ -24,12 +24,9 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories
         /// <returns></returns>
         public new async Task<Core.Entities.Sample> UpdateAsync(Miccore.CleanArchitecture.Sample.Core.Entities.Sample entity)
         {
-            var sample = await _context.Set<Core.Entities.Sample>().FirstOrDefaultAsync(x => x.Id == entity.Id && x.DeletedAt == 0);
-            if (sample is null)
-            {
-                throw new NotFoundException(ExceptionEnum.SAMPLE_NOT_FOUND.ToString());
-            }
-            sample.Name = entity.Name;
+            var sample = await _context.Set<Core.Entities.Sample>().FirstOrDefaultAsync(x => x.Id == entity.Id && (x.DeletedAt == 0 || x.DeletedAt == null)) ?? throw new NotFoundException(ExceptionEnum.SAMPLE_NOT_FOUND.ToString());
+
+            sample = SetValueForUpdateAsync(entity, sample);
             sample.UpdatedAt = DateUtils.GetCurrentTimeStamp();
             await _context.SaveChangesAsync();
 
