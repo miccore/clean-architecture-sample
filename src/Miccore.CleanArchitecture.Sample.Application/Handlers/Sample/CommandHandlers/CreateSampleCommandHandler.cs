@@ -19,7 +19,6 @@ namespace Miccore.CleanArchitecture.Sample.Application.Handlers.Sample.CommandHa
             _sampleRepository = sampleRepository;
         }
 
-
         /// <summary>
         /// Sample command Handle for adding new element
         /// </summary>

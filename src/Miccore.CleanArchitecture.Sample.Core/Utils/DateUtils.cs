@@ -1,17 +1,16 @@
-namespace Miccore.CleanArchitecture.Sample.Core.Utils
+namespace Miccore.CleanArchitecture.Sample.Core.Utils;
+
+/// <summary>
+/// date utils class for all value of dates
+/// </summary>
+public static class DateUtils
 {
     /// <summary>
-    /// date utils class for all value of dates
+    /// get current timestamps int
     /// </summary>
-    public static class DateUtils
-    {
-        /// <summary>
-        /// get current timestamps int
-        /// </summary>
-        /// <returns></returns>
-        public static int GetCurrentTimeStamp(){
-            return (int)DateTime.UtcNow.Subtract(new DateTime(1970, 01, 01, 0, 0, 0)).TotalSeconds;
-        }
-
+    /// <returns></returns>
+    public static int GetCurrentTimeStamp(){
+        return (int)DateTime.UtcNow.Subtract(new DateTime(1970, 01, 01, 0, 0, 0)).TotalSeconds;
     }
+
 }

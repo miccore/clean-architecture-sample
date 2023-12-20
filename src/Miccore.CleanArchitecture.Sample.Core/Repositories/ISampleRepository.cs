@@ -8,6 +8,5 @@ namespace Miccore.CleanArchitecture.Sample.Core.Repositories
     public interface ISampleRepository : IRepository<Miccore.CleanArchitecture.Sample.Core.Entities.Sample>
     {
         // custom operations here
-        
     }
 }
