@@ -2,7 +2,7 @@
 	"company": "Miccore",
 	"name": "CleanArchitecture",
 	"version": "1.0.0",
-    "type": "single",
+    "type": "Single",
 	"projects": [
 		{ 
 			"name": "Sample",
