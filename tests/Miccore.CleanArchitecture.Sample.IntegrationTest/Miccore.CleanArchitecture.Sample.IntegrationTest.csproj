@@ -3,32 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
-
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="6.7.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.8" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
-    <PackageReference Include="Moq" Version="4.17.2" />
-    <PackageReference Include="NUnit" Version="3.13.3" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
-    <PackageReference Include="Respawn" Version="5.0.1" />
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="coverlet.collector" Version="3.1.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Miccore.CleanArchitecture.Sample.Api\Miccore.CleanArchitecture.Sample.Api.csproj" />
-    <ProjectReference Include="..\..\src\Miccore.CleanArchitecture.Sample.Application\Miccore.CleanArchitecture.Sample.Application.csproj" />
-    <ProjectReference Include="..\..\src\Miccore.CleanArchitecture.Sample.Infrastructure\Miccore.CleanArchitecture.Sample.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\src\Miccore.CleanArchitecture.Sample.Core\Miccore.CleanArchitecture.Sample.Core.csproj" />
-  </ItemGroup>
 
 </Project>

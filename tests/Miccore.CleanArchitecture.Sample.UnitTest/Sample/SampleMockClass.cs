@@ -16,9 +16,7 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample
 
         public SampleMockClass(){
             // iquerable data
-            _data = new List<Core.Entities.Sample>(){
-               
-            };
+            _data = new List<Core.Entities.Sample>(){};
         }
 
         /// <summary>

@@ -1,0 +1,17 @@
+{
+	"company": "Miccore",
+	"name": "CleanArchitecture",
+	"version": "1.0.0",
+    "type": "single",
+	"projects": [
+		{ 
+			"name": "Sample",
+			"port": "8000",
+			"dockerUrl": "",
+			"kunernetesUrl": "sample-service",
+			"context": "",
+			"references": [],
+			"services": []
+		}
+	]
+}
