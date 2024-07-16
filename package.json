@@ -6,12 +6,12 @@
 	"projects": [
 		{ 
 			"name": "Sample",
-			"port": "8000",
+			"port": "8001",
 			"dockerUrl": "",
 			"kunernetesUrl": "sample-service",
 			"context": "",
 			"references": [],
-			"services": []
+			"services": ["Sample"]
 		}
 	]
 }
