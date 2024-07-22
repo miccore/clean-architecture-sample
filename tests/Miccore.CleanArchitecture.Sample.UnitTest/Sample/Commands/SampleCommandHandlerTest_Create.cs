@@ -66,8 +66,8 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample.Commands
             result.Should().NotBeNull();
             result.Name.Should().Be("Sample 1");
             result.CreatedAt.Should().NotBe(0);
-            result.UpdatedAt.Should().Be(0);
-            result.DeletedAt.Should().Be(0);
+            result.UpdatedAt.Should().BeNull();
+            result.DeletedAt.Should().BeNull();
         }
 
 

@@ -1,0 +1,9 @@
+images:
+  - name: cleanarchitecture-sample
+kind: Kustomization
+resources:
+- ../../base
+configMapGenerator:
+  - literals:
+    - ASPNETCORE_ENVIRONMENT="Staging"
+    name: cleanarchitecture-sample-map-config

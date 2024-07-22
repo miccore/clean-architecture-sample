@@ -8,8 +8,8 @@
 			"name": "Sample",
 			"port": "8001",
 			"dockerUrl": "",
-			"kunernetesUrl": "sample-service",
-			"context": "",
+			"kunernetesUrl": "cleanarchitecture-sample",
+			"context": "SampleApplicationDbContext",
 			"references": [],
 			"services": ["Sample"]
 		}
