@@ -6,7 +6,7 @@
 	"projects": [
 		{ 
 			"name": "Sample",
-			"port": "8001",
+			"port": "8000",
 			"dockerUrl": "",
 			"kunernetesUrl": "cleanarchitecture-sample",
 			"context": "SampleApplicationDbContext",
