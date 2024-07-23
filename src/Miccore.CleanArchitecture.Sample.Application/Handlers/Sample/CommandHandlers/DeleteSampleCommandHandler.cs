@@ -2,7 +2,6 @@ using MediatR;
 using Miccore.CleanArchitecture.Sample.Application.Commands.Sample;
 using Miccore.CleanArchitecture.Sample.Application.Mappers;
 using Miccore.CleanArchitecture.Sample.Application.Responses.Sample;
-using Miccore.CleanArchitecture.Sample.Core.Enumerations;
 using Miccore.CleanArchitecture.Sample.Core.Repositories;
 
 namespace Miccore.CleanArchitecture.Sample.Application.Handlers.Sample.CommandHandlers

@@ -1,6 +1,3 @@
-
-using System.Reflection;
-
 namespace Miccore.CleanArchitecture.Sample.Api
 {
     public class Program

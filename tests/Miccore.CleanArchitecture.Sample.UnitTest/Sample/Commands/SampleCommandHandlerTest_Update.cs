@@ -17,12 +17,20 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample.Commands
         /// mock class
         /// </summary>
         private readonly SampleMockClass _mock;
+        private readonly SampleRepository _repository;
+        private readonly UpdateSampleCommandHandler _handler;
 
         /// <summary>
         /// initialisation
         /// </summary>
         public SampleCommandHandlerTest_Update(){
             _mock = new SampleMockClass();
+            
+            var mockDb = _mock.GetDbContext().Object;
+            
+            _repository = new SampleRepository(mockDb);
+            
+            _handler = new UpdateSampleCommandHandler(_repository);
         }
 
         /// <summary>
@@ -32,15 +40,12 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample.Commands
         [Fact]
         public async void SampleCommandHandlerTest_Update_Invalid_Mapping(){
             // arrange
-            var mockDb = _mock.GetDbContext().Object;
-            var repository = new SampleRepository(mockDb);
-            var handler = new UpdateSampleCommandHandler(repository);
 
             var command = new UpdateSampleCommand(){};
             command = null;
 
             // act
-             var ex = await Assert.ThrowsAsync<ApplicationException>(() => handler.Handle(command, CancellationToken.None));
+             var ex = await Assert.ThrowsAsync<ApplicationException>(() => _handler.Handle(command, CancellationToken.None));
 
             // assert
             ex.Message.Should().BeEquivalentTo(ExceptionEnum.MAPPER_ISSUE.ToString());
@@ -55,15 +60,12 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample.Commands
         [InlineData(1)]
         public async void SampleCommandHandlerTest_Update_not_found(int id){
             // arrange
-            var mockDb = _mock.GetDbContext().Object;
-            var repository = new SampleRepository(mockDb);
-            var handler = new UpdateSampleCommandHandler(repository);
             var command = new UpdateSampleCommand(){
                 Id = id
             };
 
             // act
-            var ex = await Assert.ThrowsAsync<NotFoundException>(() => handler.Handle(command, CancellationToken.None));
+            var ex = await Assert.ThrowsAsync<NotFoundException>(() => _handler.Handle(command, CancellationToken.None));
 
             // assert
             ex.Message.Should().BeEquivalentTo(ExceptionEnum.SAMPLE_NOT_FOUND.ToString());
@@ -79,7 +81,7 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample.Commands
         public async void SampleCommandHandlerTest_Update_deleted(int id){
             // arrange
             _mock._data.Add(
-                new Miccore.CleanArchitecture.Sample.Core.Entities.Sample(){
+                new Core.Entities.Sample(){
                     Id = 1,
                     Name = "Sample 1",
                     CreatedAt = DateUtils.GetCurrentTimeStamp(),
@@ -87,15 +89,12 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample.Commands
                     UpdatedAt = 0
                 }
             );
-            var mockDb = _mock.GetDbContext().Object;
-            var repository = new SampleRepository(mockDb);
-            var handler = new UpdateSampleCommandHandler(repository);
             var command = new UpdateSampleCommand(){
                 Id = id
             };
 
             // act
-            var ex = await Assert.ThrowsAsync<NotFoundException>(() => handler.Handle(command, CancellationToken.None));
+            var ex = await Assert.ThrowsAsync<NotFoundException>(() => _handler.Handle(command, CancellationToken.None));
 
             // assert
             ex.Message.Should().BeEquivalentTo(ExceptionEnum.SAMPLE_NOT_FOUND.ToString());
@@ -111,7 +110,7 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample.Commands
         public async void SampleCommandHandlerTest_Update_successfull(int id){
             // arrange
             _mock._data.Add(
-                new Miccore.CleanArchitecture.Sample.Core.Entities.Sample(){
+                new Core.Entities.Sample(){
                     Id = 1,
                     Name = "Sample 1",
                     CreatedAt = DateUtils.GetCurrentTimeStamp(),
@@ -119,16 +118,13 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample.Commands
                     UpdatedAt = 0
                 }
             );
-            var mockDb = _mock.GetDbContext().Object;
-            var repository = new SampleRepository(mockDb);
-            var handler = new UpdateSampleCommandHandler(repository);
             var command = new UpdateSampleCommand(){
                 Id = id,
                 Name = "Sample 1 updated"
             };
 
             // act
-            var result = await  handler.Handle(command, CancellationToken.None);
+            var result = await  _handler.Handle(command, CancellationToken.None);
 
             // assert
            result.Id.Should().Be(id);

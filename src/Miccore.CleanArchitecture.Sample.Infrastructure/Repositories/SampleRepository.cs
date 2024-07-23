@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories
 {
-    public class SampleRepository : Repository<Miccore.CleanArchitecture.Sample.Core.Entities.Sample>, ISampleRepository
+    public class SampleRepository : Repository<Core.Entities.Sample>, ISampleRepository
     {
         /// <summary>
         /// Sample repository
@@ -22,7 +22,7 @@ namespace Miccore.CleanArchitecture.Sample.Infrastructure.Repositories
         /// </summary>
         /// <param name="sample"></param>
         /// <returns></returns>
-        public new async Task<Core.Entities.Sample> UpdateAsync(Miccore.CleanArchitecture.Sample.Core.Entities.Sample entity)
+        public new async Task<Core.Entities.Sample> UpdateAsync(Core.Entities.Sample entity)
         {
             var sample = await _context.Set<Core.Entities.Sample>().FirstOrDefaultAsync(x => x.Id == entity.Id && (x.DeletedAt == 0 || x.DeletedAt == null)) ?? throw new NotFoundException(ExceptionEnum.SAMPLE_NOT_FOUND.ToString());
 

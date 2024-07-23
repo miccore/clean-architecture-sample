@@ -15,13 +15,13 @@ namespace Miccore.CleanArchitecture.Sample.Application.Mappers
             #region createmap
 
             // sample response
-            CreateMap<Miccore.CleanArchitecture.Sample.Core.Entities.Sample, SampleResponse>().ReverseMap();
+            CreateMap<Core.Entities.Sample, SampleResponse>().ReverseMap();
             // sample create
-            CreateMap<Miccore.CleanArchitecture.Sample.Core.Entities.Sample, CreateSampleCommand>().ReverseMap();
+            CreateMap<Core.Entities.Sample, CreateSampleCommand>().ReverseMap();
             // sample update
-            CreateMap<Miccore.CleanArchitecture.Sample.Core.Entities.Sample, UpdateSampleCommand>().ReverseMap();
+            CreateMap<Core.Entities.Sample, UpdateSampleCommand>().ReverseMap();
             // sample response pagination
-            CreateMap<PaginationModel<Miccore.CleanArchitecture.Sample.Core.Entities.Sample>, PaginationModel<SampleResponse>>().ReverseMap();
+            CreateMap<PaginationModel<Core.Entities.Sample>, PaginationModel<SampleResponse>>().ReverseMap();
 
             #endregion
         }

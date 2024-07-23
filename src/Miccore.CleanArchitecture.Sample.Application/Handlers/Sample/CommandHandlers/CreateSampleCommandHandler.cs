@@ -28,7 +28,7 @@ namespace Miccore.CleanArchitecture.Sample.Application.Handlers.Sample.CommandHa
         public async Task<SampleResponse> Handle(CreateSampleCommand request, CancellationToken cancellationToken)
         {
             // map request with the entity
-            var sampleEntity = SampleMapper.Mapper.Map<Miccore.CleanArchitecture.Sample.Core.Entities.Sample>(request);
+            var sampleEntity = SampleMapper.Mapper.Map<Core.Entities.Sample>(request);
 
             // check if it's mapped correctly
             if(sampleEntity is null){
