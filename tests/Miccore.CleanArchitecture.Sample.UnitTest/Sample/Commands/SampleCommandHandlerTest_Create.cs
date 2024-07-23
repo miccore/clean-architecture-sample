@@ -15,12 +15,20 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample.Commands
         /// mock class
         /// </summary>
         private readonly SampleMockClass _mock;
+        private readonly SampleRepository _repository;
+        private readonly CreateSampleCommandHandler _handler;
 
         /// <summary>
         /// initialisation of test objects
         /// </summary>
         public SampleCommandHandlerTest_Create(){
             _mock = new SampleMockClass();
+            
+            var mockDb = _mock.GetDbContext().Object;
+            
+            _repository = new SampleRepository(mockDb);
+            
+            _handler = new CreateSampleCommandHandler(_repository);
         }
 
         /// <summary>
@@ -30,15 +38,11 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample.Commands
         [Fact]
         public async void SampleCommandHandlerTest_Create_Invalid_Mapping(){
             // arrange
-            var mockDb = _mock.GetDbContext().Object;
-            var repository = new SampleRepository(mockDb);
-            var handler = new CreateSampleCommandHandler(repository);
-
             var command = new CreateSampleCommand(){};
             command = null;
 
             // act
-             var ex = await Assert.ThrowsAsync<ApplicationException>(() => handler.Handle(command, CancellationToken.None));
+             var ex = await Assert.ThrowsAsync<ApplicationException>(() => _handler.Handle(command, CancellationToken.None));
 
             // assert
             ex.Message.Should().BeEquivalentTo(ExceptionEnum.MAPPER_ISSUE.ToString());
@@ -51,26 +55,19 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample.Commands
         [Fact]
         public async void SampleCommandHandlerTest_Create_successful(){
             // arrange
-            var mockDb = _mock.GetDbContext().Object;
-            var repository = new SampleRepository(mockDb);
-            var handler = new CreateSampleCommandHandler(repository);
-
             var command = new CreateSampleCommand(){
                 Name = "Sample 1"
             };
 
             // act
-             var result = await  handler.Handle(command, CancellationToken.None);
+             var result = await  _handler.Handle(command, CancellationToken.None);
 
             // assert
             result.Should().NotBeNull();
             result.Name.Should().Be("Sample 1");
             result.CreatedAt.Should().NotBe(0);
-            result.UpdatedAt.Should().Be(0);
-            result.DeletedAt.Should().Be(0);
-        }
-
-
-        
+            result.UpdatedAt.Should().BeNull();
+            result.DeletedAt.Should().BeNull();
+        } 
     }
 }

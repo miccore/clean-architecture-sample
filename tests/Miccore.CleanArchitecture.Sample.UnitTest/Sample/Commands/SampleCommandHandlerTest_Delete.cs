@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using FluentAssertions;
 using Miccore.CleanArchitecture.Sample.Application.Commands.Sample;
@@ -17,12 +16,20 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample.Commands
         /// mock class
         /// </summary>
         private readonly SampleMockClass _mock;
+        private readonly SampleRepository _repository;
+        private readonly DeleteSampleCommandHandler _handler;
 
         /// <summary>
         /// initialisation
         /// </summary>
         public SampleCommandHandlerTest_Delete(){
             _mock = new SampleMockClass();
+            
+            var mockDb = _mock.GetDbContext().Object;
+            
+            _repository = new SampleRepository(mockDb);
+            
+            _handler = new DeleteSampleCommandHandler(_repository);
         }
 
         /// <summary>
@@ -34,13 +41,10 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample.Commands
         [InlineData(1)]
         public async void SampleCommandHandlerTest_Delete_not_found(int id){
             // arrange
-            var mockDb = _mock.GetDbContext().Object;
-            var repository = new SampleRepository(mockDb);
-            var handler = new DeleteSampleCommandHandler(repository);
             var command = new DeleteSampleCommand(id);
 
             // act
-            var ex = await Assert.ThrowsAsync<NotFoundException>(() => handler.Handle(command, CancellationToken.None));
+            var ex = await Assert.ThrowsAsync<NotFoundException>(() => _handler.Handle(command, CancellationToken.None));
 
             // assert
             ex.Message.Should().BeEquivalentTo(ExceptionEnum.NOT_FOUND.ToString());
@@ -56,7 +60,7 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample.Commands
         public async void SampleCommandHandlerTest_Delete_already_deleted(int id){
             // arrange
             _mock._data.Add(
-                new Miccore.CleanArchitecture.Sample.Core.Entities.Sample(){
+                new Core.Entities.Sample(){
                     Id = 1,
                     Name = "Sample 1",
                     CreatedAt = DateUtils.GetCurrentTimeStamp(),
@@ -64,13 +68,10 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample.Commands
                     UpdatedAt = 0
                 }
             );
-            var mockDb = _mock.GetDbContext().Object;
-            var repository = new SampleRepository(mockDb);
-            var handler = new DeleteSampleCommandHandler(repository);
             var command = new DeleteSampleCommand(id);
 
             // act
-            var ex = await Assert.ThrowsAsync<NotFoundException>(() => handler.Handle(command, CancellationToken.None));
+            var ex = await Assert.ThrowsAsync<NotFoundException>(() => _handler.Handle(command, CancellationToken.None));
 
             // assert
             ex.Message.Should().BeEquivalentTo(ExceptionEnum.NOT_FOUND.ToString());
@@ -86,7 +87,7 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample.Commands
         public async void SampleCommandHandlerTest_Delete_successful(int id){
             // arrange
             _mock._data.Add(
-                new Miccore.CleanArchitecture.Sample.Core.Entities.Sample(){
+                new Core.Entities.Sample(){
                     Id = 1,
                     Name = "Sample 1",
                     CreatedAt = DateUtils.GetCurrentTimeStamp(),
@@ -94,13 +95,10 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample.Commands
                     UpdatedAt = 0
                 }
             );
-            var mockDb = _mock.GetDbContext().Object;
-            var repository = new SampleRepository(mockDb);
-            var handler = new DeleteSampleCommandHandler(repository);
             var command = new DeleteSampleCommand(id);
 
             // act
-            var result =  await handler.Handle(command, CancellationToken.None);
+            var result =  await _handler.Handle(command, CancellationToken.None);
 
             // assert
             result.DeletedAt.Should().NotBe(0);

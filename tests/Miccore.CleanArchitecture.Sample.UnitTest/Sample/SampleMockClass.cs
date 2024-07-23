@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
 using Miccore.CleanArchitecture.Sample.Core.Utils;
 using Miccore.CleanArchitecture.Sample.Infrastructure.Data;
-using Miccore.Pagination.Model;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Moq.EntityFrameworkCore;
@@ -12,13 +10,11 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample
     public class SampleMockClass
     {   
 
-        public List<Miccore.CleanArchitecture.Sample.Core.Entities.Sample> _data;
+        public List<Core.Entities.Sample> _data;
 
         public SampleMockClass(){
             // iquerable data
-            _data = new List<Core.Entities.Sample>(){
-               
-            };
+            _data = new List<Core.Entities.Sample>(){};
         }
 
         /// <summary>
@@ -30,11 +26,31 @@ namespace Miccore.CleanArchitecture.Sample.UnitTest.Sample
             // context database setup
             var options = new DbContextOptionsBuilder<SampleApplicationDbContext>().Options;
             var mockDbContext = new Mock<SampleApplicationDbContext>(options);
-            mockDbContext.SetupSequence(x => x.Set<Miccore.CleanArchitecture.Sample.Core.Entities.Sample>())
+            mockDbContext.SetupSequence(x => x.Set<Core.Entities.Sample>())
                         .ReturnsDbSet(_data);
             
             // return mock
             return mockDbContext;
+        }
+
+        /// <summary>
+        /// générate data from samples
+        /// </summary>
+        /// <param name="size"></param> <summary>
+        public void GenerateData(int size){
+
+            for (int i = 1; i <= 9; i++)
+            {
+                _data.Add(
+                        new Core.Entities.Sample(){
+                            Id = i,
+                            Name = "Sample " + i,
+                            CreatedAt = DateUtils.GetCurrentTimeStamp(),
+                            DeletedAt = 0,
+                            UpdatedAt = 0
+                        }
+                );
+            }
         }
 
     }
