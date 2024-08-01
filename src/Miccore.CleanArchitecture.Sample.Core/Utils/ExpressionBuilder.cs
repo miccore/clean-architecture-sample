@@ -4,10 +4,16 @@ namespace Miccore.CleanArchitecture.Sample.Core.Utils;
 
 public static class ExpressionBuilder<T> where T : class
 {
+    /// <summary>
+    /// create contains expression
+    /// </summary>
+    /// <param name="columns"></param>
+    /// <param name="value"></param>
+    /// <returns></returns> <summary>
     public static Expression<Func<T, bool>> CreateContainsExpression(List<string> columns, string value)
     {
         var param = Expression.Parameter(typeof(T), "t");
-        Expression? body = null;
+        Expression body = Expression.Empty();
 
         foreach (var colums in columns)
         {
@@ -21,6 +27,12 @@ public static class ExpressionBuilder<T> where T : class
         return Expression.Lambda<Func<T, bool>>(body, param);
     }
 
+    /// <summary>
+    /// create equal expression
+    /// </summary>
+    /// <param name="propertyName"></param>
+    /// <param name="value"></param>
+    /// <returns></returns> <summary>
     public static Expression<Func<T, bool>> CreateEqualExpression(string propertyName, object value)
     {
         var param = Expression.Parameter(typeof(T), "t");
@@ -34,6 +46,12 @@ public static class ExpressionBuilder<T> where T : class
         return Expression.Lambda<Func<T, bool>>(body, param);
     }
 
+    /// <summary>
+    /// Combine two expressions
+    /// </summary>
+    /// <param name="left"></param>
+    /// <param name="right"></param>
+    /// <returns></returns>
     public static Expression<Func<T, bool>> ReduceExpression(Expression<Func<T, bool>> left, Expression<Func<T, bool>> right)
     {
         var invokedExpr = Expression.Invoke(right, left.Parameters.Cast<Expression>());

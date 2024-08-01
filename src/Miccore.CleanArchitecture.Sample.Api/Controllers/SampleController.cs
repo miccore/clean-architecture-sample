@@ -1,4 +1,5 @@
 using System.Net;
+using Asp.Versioning;
 using MediatR;
 using Miccore.CleanArchitecture.Sample.Api.Validators.Sample;
 using Miccore.CleanArchitecture.Sample.Application.Commands.Sample;
@@ -15,8 +16,9 @@ namespace Miccore.CleanArchitecture.Sample.Api.Controllers
     /// sample api controller
     /// </summary>
 
-    [Route("[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class SampleController : BaseController
     {
         private readonly IMediator _mediator;

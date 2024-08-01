@@ -2,6 +2,8 @@ using Microsoft.OpenApi.Models;
 using FluentValidation.AspNetCore;
 using Miccore.CleanArchitecture.Sample.Infrastructure.Persistances;
 using Miccore.CleanArchitecture.Sample.Application.Dependency;
+using Asp.Versioning;
+using Asp.Versioning.ApiExplorer;
 
 namespace Miccore.CleanArchitecture.Sample.Api
 {
@@ -64,7 +66,6 @@ namespace Miccore.CleanArchitecture.Sample.Api
             #endregion
 
             #region service adding
-
             services.AddControllers();
             services.AddMvc().AddFluentValidation();
             services.AddControllersWithViews()
@@ -72,14 +73,24 @@ namespace Miccore.CleanArchitecture.Sample.Api
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
             services.AddAutoMapper(typeof(Startup));
-
+            services.AddApiVersioning(opt => {
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.DefaultApiVersion = new ApiVersion(1, 0);
+                opt.ReportApiVersions = true;
+                opt.ApiVersionReader = ApiVersionReader.Combine(
+                    new QueryStringApiVersionReader("api-version"),
+                    new HeaderApiVersionReader("X-Version"),
+                    new MediaTypeApiVersionReader("ver")
+                );
+            }).AddApiExplorer(opt => {
+                opt.GroupNameFormat = "'v'VVV";
+                opt.SubstituteApiVersionInUrl = true;
+            });
             #endregion
 
             #region functions
-            
             services.AddInfrastructure(_configuration);
             services.AddMediat(_configuration);
-            
             #endregion
 
         }
@@ -112,15 +123,17 @@ namespace Miccore.CleanArchitecture.Sample.Api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sample.Api");
+                var provider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    c.SwaggerEndpoint($"/swagger/{description.GroupName.ToLowerInvariant()}/swagger.json", $"Sample.Api {description.GroupName.ToUpperInvariant()}");
+                }
                 c.RoutePrefix = string.Empty;
             });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-            
-
         }
 
     }
