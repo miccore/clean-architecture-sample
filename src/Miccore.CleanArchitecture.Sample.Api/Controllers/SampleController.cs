@@ -16,7 +16,7 @@ namespace Miccore.CleanArchitecture.Sample.Api.Controllers
     /// sample api controller
     /// </summary>
 
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
     public class SampleController : BaseController

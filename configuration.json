@@ -1,7 +1,7 @@
 {
     "Routes": [
 		{ 
-			"DownstreamPathTemplate": "/api/{version}/sample",
+			"DownstreamPathTemplate": "/{version}/sample",
 			"DownstreamScheme": "http",
 			"DownstreamHostAndPorts": [
 				{
@@ -14,7 +14,7 @@
 			"SwaggerKey": "Samples"
 		}, 
 		{ 
-			"DownstreamPathTemplate": "api/{version}/sample/{id}",
+			"DownstreamPathTemplate": "/{version}/sample/{id}",
 			"DownstreamScheme": "http",
 			"DownstreamHostAndPorts": [
 				{
