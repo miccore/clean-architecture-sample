@@ -1,0 +1,40 @@
+volumes:
+  dbdata:
+services:
+  db:
+    platform: linux/x86_64
+    image: mysql
+    container_name: miccore.cleanarchitecture.mysql.container
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+    - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ROOT_PASSWORD
+      MYSQL_DATABASE: DATABASE_NAME
+      MYSQL_USER: USER
+      MYSQL_PASSWORD: USER_PASSWORD
+    volumes:
+    - dbdata:/var/lib/mysql
+  adminer:
+    container_name: miccore.cleanarchitecture.adminer.container
+    image: adminer
+    restart: always
+    ports:
+    - 82:8080
+    links:
+    - db
+  sample:
+    container_name: miccore.cleanarchitecture.sample.container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+    - db
+    expose:
+    - 80
+    ports:
+    - 8001:80
+    environment:
+      ASPNETCORE_ENVIRONMENT: Staging
+      Server: db
