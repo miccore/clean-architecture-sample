@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: miccore-cleanarchitecture-db
+  namespace: miccore-cleanarchitecture
+  labels:
+    group: db
+spec:
+  type: NodePort
+  ports:
+    - port: 5432
+  selector:
+    app: miccore-cleanarchitecture-db

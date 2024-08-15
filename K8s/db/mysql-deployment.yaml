@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: miccore-cleanarchitecture-db-deploy
+  namespace: miccore-cleanarchitecture
+  labels:
+    app: miccore-cleanarchitecture-db
+    group: db
+spec:
+  selector:
+    matchLabels:
+      app: miccore-cleanarchitecture-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: miccore-cleanarchitecture-db
+        group: db
+    spec:
+      containers:
+      - name: miccore-cleanarchitecture-db
+        image: mysql
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 5432
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: root_password
+        - name: MYSQL_USER
+          value: mysql_user
+        - name: MYSQL_PASSWORD
+          value: mysal_password
+        - name: MYSQL_DATABASE
+          value: mysql_db
+        - name: PGDATA
+          value: /var/lib/mysql
+        volumeMounts:
+        - name: mysql-pv-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-pv-storage

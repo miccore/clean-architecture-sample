@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: miccore-cleanarchitecture-adminer
+  namespace: miccore-cleanarchitecture
+  labels:
+    app: miccore-cleanarchitecture-adminer
+    group: db
+spec:
+  selector:
+    matchLabels:
+      app: miccore-cleanarchitecture-adminer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: miccore-cleanarchitecture-adminer
+        group: db
+    spec:
+      containers:
+      - name: miccore-cleanarchitecture-adminer
+        image: adminer
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8080
+        env:
+          - name: ADMINER_DESIGN
+            value: pepa-linha
+          - name: ADMINER_DEFAULT_SERVER
+            value: mysql
