@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 as build
 WORKDIR /app
 
 COPY . .
-WORKDIR ./src/Miccore.CleanArchitecture.Sample.Api
+WORKDIR /app/src/Miccore.CleanArchitecture.Sample.Api
 RUN dotnet restore
 RUN dotnet publish --no-restore -c Release -o /out
 
